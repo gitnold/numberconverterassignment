@@ -138,15 +138,17 @@ void octal_any_base(size_t octal, size_t base) {
 
 void printWelcome(void) {
   printf(">----- WELCOME TO THE NUMBER SYSTEMS CONVERTER (^_^) ------<\n");
-  printf("-> decimal[10]\n-> hex[16]\n-> octal[8]\n-> Binary[2]\n");
-  printf(
-      "Enter expression[ <number> <target base>  e.g ff 8 -> converts hex to "
-      "octal]\n~~~>");
+  printf("-> decimal [t][10]\n-> hex [x][16]\n-> octal [o][8]\n-> Binary "
+         "[n][2]\n");
+  printf("Enter expression[ <number> <source base><target base>  e.g ff x8 -> "
+         "converts hex to "
+         "octal]\n~~~>");
 }
 
 int main(void) {
   char expression[70];
   int decimal, base;
+  char source_base;
 
   printWelcome();
 
@@ -156,40 +158,26 @@ int main(void) {
   hexchar = strpbrk(expression, hex);
   sscanf(expression, "%*d %d", &base);
   if (hexchar != 0) {
-    sscanf(expression, "%x %d", &decimal, &base);
+    sscanf(expression, "%x %c%d", &decimal, &source_base, &base);
   } else {
-    sscanf(expression, "%d %d", &decimal, &base);
+    sscanf(expression, "%d %c%d", &decimal, &source_base, &base);
   }
 
-  switch (base) {
-  case 2:
+  switch (source_base) {
+  case 'n':
     decimal_any_base(decimal, base);
     break;
-  case 8:
+  case 'o':
     octal_any_base(decimal, base);
     break;
-  case 10:
+  case 't':
     decimal_any_base(decimal, base);
     break;
-  case 16:
+  case 'x':
     hex_any_base(decimal, base);
     break;
   default:
     printf("Invalid base!!");
     break;
   }
-
-  // convert to base 2
-  /*decimal_any_base(952, 2);
-  // convert to base 8
-  decimal_any_base(952, 8);
-  // convert to base 16
-  decimal_any_base(952, 16);
-
-  // convert binary to octal
-  binary_any_base(1111, 8);
-  // convert binary to decimal
-  binary_any_base(1111, 10);
-  // convert binary to hexadecimal
-  binary_any_base(1111, 16);*/
 }
