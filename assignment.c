@@ -129,6 +129,10 @@ void octal_any_base(size_t octal, size_t base) {
 
   while (octal != 0) {
     int last_digit = octal % 10;
+    if (last_digit > 7) {
+      printf("Octal digits must range 0-7!!");
+      exit(1);
+    }
     decimal += last_digit * pow(8, place_value);
     octal /= 10;
     place_value++;
@@ -165,7 +169,7 @@ int main(void) {
 
   switch (source_base) {
   case 'n':
-    decimal_any_base(decimal, base);
+    binary_any_base(decimal, base);
     break;
   case 'o':
     octal_any_base(decimal, base);
@@ -174,7 +178,7 @@ int main(void) {
     decimal_any_base(decimal, base);
     break;
   case 'x':
-    hex_any_base(decimal, base);
+    decimal_any_base(decimal, base);
     break;
   default:
     printf("Invalid base!!");
